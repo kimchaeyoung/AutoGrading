@@ -33,9 +33,18 @@ def git_alert(request):
     return render(request, "push.html", {})
 
 def test_code(request):
-    result = subprocess.check_output(["python", "git_files/hello.py", "3"])
-    result = int(result.decode('utf-8'))
-    
+   #result = subprocess.check_output(["python", "git_files/hello.py"])
+   # result = int(result.decode('utf-8'))
+
+   command = "python git_files/hello.py"
+   command = command.split()
+   p = subprocess.Popen(command, stdin=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines = True)
+   result = p.communicate('3')
+   
+   print(result)
+
+
+   ''' 
     if result is 9:
         result = subprocess.check_output(["python", "git_files/hello.py", "8"])
         result = int(result.decode('utf-8'))
@@ -43,10 +52,13 @@ def test_code(request):
             result = "pass"
         else:
             result = "fail"
-    else:
+   '''
+   if result is 9 :
+        result = "pass"
+   else:
         result = "fail"
 
-    return JsonResponse(result, safe=False)
+   return JsonResponse(result, safe=False)
 
 
      
