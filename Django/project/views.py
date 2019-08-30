@@ -5,6 +5,31 @@ from django.shortcuts import render
 import subprocess
 import pprint
 import os
+from django.views.generic import TemplateView
+from django.contrib.auth.models import User
+
+def home(request):
+    return render(request, 'home.html')
+
+def login(request):
+    return render(request, 'login.html')
+
+def student(request):
+    return render(request, 'student.html')
+
+def professor(request):
+    return render(request, 'professor.html')
+
+class UsersView(TemplateView):
+    template_name='studentlist.html'
+
+    def get_context_data(self,**kwargs):
+        context = super(UsersView,self).get_context_data(**kwargs)
+        context['object_list'] = User.objects.all()
+        return context
+
+def classroom(request):
+    return render(request, 'class.html')   
 
 @csrf_exempt
 def git_alert(request):

@@ -1,0 +1,28 @@
+<style>
+.example_b {
+color: #fff !important;
+text-transform: uppercase;
+text-decoration: none;
+background: #60a3bc;
+padding: 20px 45px;
+display: inline-block;
+border: none;
+transition: all 0.4s ease 0s;
+}
+.example_b:hover {
+text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+transition: all 0.4s ease 0s;
+}
+</style>
+
+{% block content %}
+        {% if user.is_authenticated %}
+             <p class="display-4">Hello, {{ user.username }}</p>
+             <center><input type="button" class="example_b" onclick="location.href='{% url 'studentlist' %}'" target="_blank" rel="nofollow" value="학생 명단"><span>
+<br/><br/><input type="button" class="example_b" onclick="location.href='{% url 'push' %}'" target="_blank" rel="nofollow" value="채점관리"><span>
+        {% else %}
+             <a href="{% url 'login' %}">Login</a><br>
+        {% endif %}
+{% endblock content %}

@@ -1,0 +1,32 @@
+<style>
+ .login {
+  float: right;
+}
+ .title {
+  text-align: center;
+  padding: 50px;
+  font-size: 30px;
+}
+
+.example_b {
+color: #fff !important;
+text-transform: uppercase;
+text-decoration: none;
+background: #60a3bc;
+padding: 20px 45px;
+display: inline-block;
+border: none;
+transition: all 0.4s ease 0s;
+}
+.example_b:hover {
+text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+transition: all 0.4s ease 0s;
+}
+
+</style>
+
+<h2 class="title"> HGU Auto Grading System </h2>
+<center><input type="button" class="example_b" onclick="location.href='{% url 'student' %}'" target="_blank" rel="nofollow" value="학생"><span>  
+<br/><br/><input type="button" class="example_b" onclick="location.href='{% url 'professor' %}'" target="_blank" rel="nofollow" value="교수"><span>
