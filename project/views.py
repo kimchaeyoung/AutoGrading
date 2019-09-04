@@ -43,22 +43,24 @@ def run_code(repository_name):
             stderr=subprocess.STDOUT,
             shell = True)
     stdout,stderr = MyOut.communicate()
-    stdout.encode(encoding='UTF-8',errors='strict')
-    stderr.encode(encoding='UTF-8',errors='strict')
+    if stdout is not None:
+        stdout = stdout.decode('UTF-8')
+    if stderr is not None:
+        stderr = stderr.decode('UTF-8')
     print(stdout)
     print(stderr)
 
     with open('input_output/output.txt', 'r') as f:
-        data = f.read()
-        print(data)
+        data = f.read().replace('\n','') 
+        print('**'+data)
 
     if stderr is not None:
         print('error')
         return stderr
 
-    elif stdout is data:
+    elif stdout == data:
         print('success')
         return 'success'
-    else:
+    elif stdout is not data:
         print('fail')
         return 'fail'
