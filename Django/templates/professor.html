@@ -18,11 +18,5 @@ transition: all 0.4s ease 0s;
 </style>
 
 {% block content %}
-        {% if user.is_authenticated %}
-             <p class="display-4">Hello, {{ user.username }}</p>
              <center><input type="button" class="example_b" onclick="location.href='{% url 'studentlist' %}'" target="_blank" rel="nofollow" value="학생 명단"><span>
-<br/><br/><input type="button" class="example_b" onclick="location.href='{% url 'push' %}'" target="_blank" rel="nofollow" value="채점관리"><span>
-        {% else %}
-             <a href="{% url 'login' %}">Login</a><br>
-        {% endif %}
 {% endblock content %}

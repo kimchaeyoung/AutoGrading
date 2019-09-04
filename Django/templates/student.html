@@ -1,7 +1,9 @@
 {% block content %}
 	{% if user.is_authenticated %}
              <p class="display-4">Hello, {{ user.username }}</p>
-	{% else %}
+             <button onclick="location.href='{% url 'createhw' %}'">Check Assignment</button>
+             <button onclick="location.href='{% url 'myhw' %}'">My Page</button
+        {% else %}
              <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
-	{% endif %}
+        {% endif %}
 {% endblock content %}

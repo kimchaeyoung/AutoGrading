@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'project.apps.ProjectConfig',
     'social_django',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -114,7 +116,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'professor'
+LOGIN_REDIRECT_URL = 'student'
 
 SOCIAL_AUTH_GITHUB_KEY = '417a70cc7fd76f4f06a7'
 SOCIAL_AUTH_GITHUB_SECRET = 'c7c7419493c6467d6ec3e0a19d13eaf3613848f9'
