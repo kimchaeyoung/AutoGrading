@@ -48,6 +48,21 @@ def classroom(request):
     return render(request, 'class.html')   
 
 @csrf_exempt
+def webhook(request):
+    if 'payload' in request.POST:
+        payload = json.loads(request.POST['payload'])
+        result = "created"
+        clone_url = payload['repository']['clone_url']
+        command = 'git clone ' + str(clone_url)
+        command = command.split()
+        subprocess.Popen(command, stdin=subprocess.PIPE, stderr = subprocess.PIPE, universal_newlines = True)
+
+        run_code(payload['repository']['name'])
+        return HttpResponse("success!")
+    return HttpResponse("fail")
+
+
+@csrf_exempt
 def createhw(request):
     if 'payload' in request.POST:
         payload = json.loads(request.POST['payload'])
@@ -99,66 +114,19 @@ def myhw(request):
         return render(request, "myhw.html", {'hws':my_hws})
 
 
-'''
-@csrf_exempt
-def git_alert(request):
-    result = 'pingping'
-    if 'payload' in request.POST:
-        payload = json.loads(request.POST['payload'])
-         
-        if payload['action'] is not null:
-            if payload['action']=="created":
-                assignment=payload['repository']['name']
-                print(assignment)
+def run_code(repository_name):
+    MyOut = subprocess.Popen('./runcode.sh ' + repository_name, stdout=subproess.PIPE, stderr=subprocess.STDOUT, shell=True)
+    stdout, stderr = MyOut.communicate()
+    if stdout is not None:
+        stdout = stdout.decode('utf-8')
+    if stderr is not None:
+        stderr = stderr.decode('utf-8')
 
-
-        if payload['pusher']['name']!=null:
-            student=payload['pusher']['name']
-            if student != "jihyegnb":
-                s=Student(name=student, status="commit")
-                s.save()
-
-
-        if payload['created'] is True:
-            result = "created"
-            clone_url = payload['repository']['clone_url']
-           
-            command = 'git clone ' + str(clone_url) 
-            command = command.split()
-            subprocess.Popen(command, stdin=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines = True)
-
-        else:
-            result = "push"
-            cwd = os.getcwd()
-            os.chdir(cwd + '/git_files')
-            command = 'git pull'
-            command = command.split()
-            subprocess.call(command)
-            os.chdir(cwd)
-
-
-    return render(request, "push.html", {})
-
-def test_code(request):
-   #result = subprocess.check_output(["python", "git_files/hello.py"])
-   # result = int(result.decode('utf-8'))
-
-   command = "python git_files/hello.py"
-   command = command.split()
-   p = subprocess.Popen(command, stdin=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines = True)
-   result = p.communicate('3')
-   
-   print(result)
-
-   if result is 9 :
-        result = "pass"
-   else:
-        result = "fail"
-
-   return JsonResponse(result, safe=False)
-'''
-
-     
-
-
-
+    with open('input_output/output.txt', 'r') as f:
+        data = f.read().replace('\n','')
+    if stderr is not None:
+        return stderr
+    elif stdout == data:
+        return 'success'
+    else stdout is not data:
+        return 'fail'
