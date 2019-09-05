@@ -128,5 +128,5 @@ def run_code(repository_name):
         return stderr
     elif stdout == data:
         return 'success'
-    else stdout is not data:
+    elif stdout is not data:
         return 'fail'
