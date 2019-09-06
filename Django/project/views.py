@@ -9,7 +9,6 @@ from django.views.generic import TemplateView
 from django.contrib.auth.models import User
 from .models import *
 
-
 def home(request):
     return render(request, 'home.html')
 
@@ -49,17 +48,27 @@ def classroom(request):
 
 @csrf_exempt
 def webhook(request):
+    result="before grading"
     if 'payload' in request.POST:
         payload = json.loads(request.POST['payload'])
-        result = "created"
-        clone_url = payload['repository']['clone_url']
-        command = 'git clone ' + str(clone_url)
-        command = command.split()
-        subprocess.Popen(command, stdin=subprocess.PIPE, stderr = subprocess.PIPE, universal_newlines = True)
-
-        run_code(payload['repository']['name'])
-        return HttpResponse("success!")
-    return HttpResponse("fail")
+        if payload['created'] is True:
+            clone_url = payload['repository']['clone_url']
+            command = 'git clone ' + str(clone_url)
+            command = command.split()
+            subprocess.Popen(command, stdin=subprocess.PIPE, stderr = subprocess.PIPE, universal_newlines = True)
+            result=run_code(payload['repository']['name'])
+        else: 
+            result = "push"
+            print("x")
+            cwd = os.getcwd()
+            os.chdir(cwd + '/' + payload['repository']['name'])
+            command = 'git pull'
+            command = command.split()
+            subprocess.call(command)
+            os.chdir(cwd)
+            result=run_code(payload['repository']['name'])
+    print(result)
+    return HttpResponse(result)
 
 
 @csrf_exempt
@@ -115,7 +124,7 @@ def myhw(request):
 
 
 def run_code(repository_name):
-    MyOut = subprocess.Popen('./runcode.sh ' + repository_name, stdout=subproess.PIPE, stderr=subprocess.STDOUT, shell=True)
+    MyOut = subprocess.Popen('./runcode.sh ' + repository_name, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     stdout, stderr = MyOut.communicate()
     if stdout is not None:
         stdout = stdout.decode('utf-8')

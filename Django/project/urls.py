@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^student/$', views.student, name='student'),
     url(r'^professor/$', views.professor, name='professor'),
     url(r'^createhw/$', views.createhw, name='createhw'),
+    url(r'^webhook/$', views.webhook, name='webhook'),
     url(r'^myhw/$', views.myhw, name='myhw'),
     url(r'^mypage/$', views.mypage, name='mypage'),
     url(r'^studentlist/$', views.UsersView.as_view(), name='studentlist'),
