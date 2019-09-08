@@ -8,12 +8,47 @@ import os
 from django.views.generic import TemplateView
 from django.contrib.auth.models import User
 from .models import *
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
+from .forms import *
+
+def signup_form(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.cleaned_data
+            if user['isManager'] == False:
+                s = Student(student_id=user['id'], student_name=user['name'])
+                s.save()
+                return render(request, 'registration/login.html')
+            else:
+                p = Professor(professor_id=user['id'], professor_name=user['name'])
+                p.save()
+                return HttpResponse("successfully applied! "+str(user['name'])+", please wait until your account is approved.")
+    else:
+            form = SignUpForm()
+
+    return render(request, 'form.html', {'form':form})
 
 def home(request):
     return render(request, 'home.html')
 
 def login(request):
+        
     return render(request, 'login.html')
+
+def success_login(request):
+    current_user=request.user
+    if Student.objects.filter(student_id=current_user).exists():
+        return render(request, 'student.html')
+    elif Professor.objects.filter(professor_id=current_user).exists():
+        p = Professor.objects.get(professor_id=current_user)
+        if p.status == True:
+            return render(request, 'professor.html')
+        else:
+            return HttpResponse("Sorry, you are not yet approved as manager.")
+    else:
+        return render(request, 'home.html')
 
 def student(request):
     return render(request, 'student.html')

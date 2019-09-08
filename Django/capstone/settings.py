@@ -115,8 +115,10 @@ AUTHENTICATION_BACKENDS = (
  'django.contrib.auth.backends.ModelBackend',
 )
 
+#AUTH_USER_MODEL = "project.CustomUser" 
+
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'student'
+LOGIN_REDIRECT_URL = 'success_login'
 
 SOCIAL_AUTH_GITHUB_KEY = '417a70cc7fd76f4f06a7'
 SOCIAL_AUTH_GITHUB_SECRET = 'c7c7419493c6467d6ec3e0a19d13eaf3613848f9'

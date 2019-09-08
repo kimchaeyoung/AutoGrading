@@ -28,5 +28,12 @@ transition: all 0.4s ease 0s;
 </style>
 
 <h2 class="title"> HGU Auto Grading System </h2>
-<center><input type="button" class="example_b" onclick="location.href='{% url 'student' %}'" target="_blank" rel="nofollow" value="학생"><span>  
-<br/><br/><input  type="button" class="example_b" onclick="location.href='{% url 'professor' %}'" target="_blank" rel="nofollow" value="교수"><span>
+{% if user.is_authenticated %}
+<center><p>Hi {{ user.username }}
+<center><input type="button" class="example_b" onclick="location.href='{% url 'logout' %}'" target="_blank" rel="nofollow" value="Log Out"><span>
+<center><input type="button" class="example_b" onclick="location.href='{% url 'success_login' %}'" target="_blank" rel="nofollow" value="My Page"><span>
+{% else %}
+<center><input type="button" class="example_b" onclick="location.href='{% url 'signup' %}'" target="_blank" rel="nofollow" value="Sign Up"><span>
+<br/><br/><input  type="button" class="example_b" onclick="location.href='{% url 'social:begin' 'github' %}'" target="_blank" rel="nofollow" value="Log In"><span>
+{% endif %}
+

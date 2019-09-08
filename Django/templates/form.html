@@ -1,0 +1,35 @@
+<h3>Sign Up</h3>
+<p> please write your id as github id.</p>
+
+<!---<select>
+<option value="" selected="selected"></option>
+<option value="s">student</option>
+<option value="p">professor</option>
+</select>
+
+<p><form id="s" class="user s" method="post" style="display:none" >
+  {% csrf_token %}
+  {{student_form}}
+  <button type="submit">submit</button>
+</form>
+
+<form id="p" class="user p" method="post" style="display:none">
+ {% csrf_token %}
+ {{form}}
+</form>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+  $("select").on("change", function() {    
+    $('.user').hide();
+    $('#' + $(this).val()).show();      
+  });
+</script>
+
+-->
+
+<form method="POST">
+  {%csrf_token%}
+  {{form}}
+  <button type="submit">Submit</button>
+</form>
