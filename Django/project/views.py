@@ -12,6 +12,9 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from .forms import *
 
+def home(request):
+    return render(request, 'home.html')
+
 def signup_form(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -29,9 +32,6 @@ def signup_form(request):
             form = SignUpForm()
 
     return render(request, 'form.html', {'form':form})
-
-def home(request):
-    return render(request, 'home.html')
 
 def login(request):
         
@@ -53,6 +53,10 @@ def success_login(request):
 def student(request):
     return render(request, 'student.html')
 
+def myhw(request):
+        my_hws = Homework_student.objects.get(student="joyful96")
+        return render(request, "myhw.html", {'hws':my_hws})
+
 def professor(request):
     if request.user != None:
         professor = request.user.username
@@ -62,14 +66,6 @@ def professor(request):
             print(professor)
     return render(request, 'professor.html')
 
-def check_task(request):
-    return render(request, 'check_task.html')
-
-def mypage(request):
-    current_user=request.user
-    data = Student.objects.get(name=current_user.username)
-    return render(request, 'mypage.html', {'student': data})
-
 class UsersView(TemplateView):
     template_name='studentlist.html'
 
@@ -77,9 +73,6 @@ class UsersView(TemplateView):
         context = super(UsersView,self).get_context_data(**kwargs)
         context['object_list'] = User.objects.all()
         return context
-
-def classroom(request):
-    return render(request, 'class.html')   
 
 @csrf_exempt
 def webhook(request):
@@ -152,10 +145,6 @@ def createhw(request):
     hws = Homeworks.objects.all()
     return render(request, "hwlist.html", {'hws':hws})
             
-
-def myhw(request):
-        my_hws = Homework_student.objects.get(student="joyful96")
-        return render(request, "myhw.html", {'hws':my_hws})
 
 
 def run_code(repository_name):
