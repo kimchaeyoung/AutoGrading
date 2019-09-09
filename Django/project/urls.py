@@ -9,7 +9,6 @@ urlpatterns = [
     url(r'^success_login/$', views.success_login, name='success_login'),
     url(r'^createhw/$', views.createhw, name='createhw'),
     url(r'^webhook/$', views.webhook, name='webhook'),
-    url(r'^myhw/$', views.myhw, name='myhw'),
     url(r'^studentlist/$', views.UsersView.as_view(), name='studentlist'),
 #   url(r'^api/push/$', views.git_alert, name='push'),
 #    url(r'^api/result/$', views.test_code),

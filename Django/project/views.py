@@ -40,7 +40,11 @@ def login(request):
 def success_login(request):
     current_user=request.user
     if Student.objects.filter(student_id=current_user).exists():
-        return render(request, 'student.html')
+        if not Homework_student.objects.filter(student=current_user).exists():
+            my_hws = "No accepted homeworks yet"
+        else :
+            my_hws = Homework_student.objects.filter(student=current_user)
+        return render(request, 'student.html', {'hws':my_hws})
     elif Professor.objects.filter(professor_id=current_user).exists():
         p = Professor.objects.get(professor_id=current_user)
         if p.status == True:
@@ -48,14 +52,10 @@ def success_login(request):
         else:
             return HttpResponse("Sorry, you are not yet approved as manager.")
     else:
-        return render(request, 'home.html')
+        return HttpResponse("Please sign up first")
 
 def student(request):
     return render(request, 'student.html')
-
-def myhw(request):
-        my_hws = Homework_student.objects.get(student="joyful96")
-        return render(request, "myhw.html", {'hws':my_hws})
 
 def professor(request):
     if request.user != None:
