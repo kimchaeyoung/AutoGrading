@@ -84,7 +84,7 @@ def webhook(request):
             command = 'git clone ' + str(clone_url)
             command = command.split()
             subprocess.Popen(command, stdin=subprocess.PIPE, stderr = subprocess.PIPE, universal_newlines = True)
-            result=run_code(payload['repository']['name'])
+#            result=run_code(payload['repository']['name'])
         else: 
             result = "push"
             print("x")
@@ -94,8 +94,8 @@ def webhook(request):
             command = command.split()
             subprocess.call(command)
             os.chdir(cwd)
-            result=run_code(payload['repository']['name'])
-    print(result)
+#            result=run_code(payload['repository']['name'])
+#    print(result)
     return HttpResponse(result)
 
 
@@ -147,7 +147,8 @@ def createhw(request):
             
 
 
-def run_code(repository_name):
+def run_code(request):
+    repository_name = "hw4-kimchaeyoung"
     MyOut = subprocess.Popen('./runcode.sh ' + repository_name, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     stdout, stderr = MyOut.communicate()
     if stdout is not None:
@@ -158,8 +159,11 @@ def run_code(repository_name):
     with open('input_output/output.txt', 'r') as f:
         data = f.read().replace('\n','')
     if stderr is not None:
+        print("stderr")
         return stderr
     elif stdout == data:
+        print("success")
         return 'success'
     elif stdout is not data:
+        print("fail")
         return 'fail'

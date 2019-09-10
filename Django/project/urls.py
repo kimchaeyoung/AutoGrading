@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^webhook/$', views.webhook, name='webhook'),
     url(r'^studentlist/$', views.UsersView.as_view(), name='studentlist'),
 #   url(r'^api/push/$', views.git_alert, name='push'),
-#    url(r'^api/result/$', views.test_code),
+    url(r'^api/result/$', views.run_code, name='test'),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^auth/', include('social_django.urls', namespace='social')),
 ]
