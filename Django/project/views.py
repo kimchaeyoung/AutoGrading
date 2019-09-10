@@ -122,12 +122,12 @@ def createhw(request):
                     cs = Classroom_student(classroom=organization, student=words[1])
                     cs.save()
                 if not Homework_student.objects.filter(homework=words[0].upper()).filter(student=words[1]).exists():
-                    hs = Homework_student(homework=words[0].upper(), student=words[1])
+                    hs = Homework_student(homework=words[0].upper(), student=words[1], homework_name=hwname)
                     hs.save()
 
             elif action=="deleted":
                 if Homework_student.objects.filter(homework=words[0].upper()).filter(student=words[1]).exists():
-                    hs = Homework_student(homework=words[0].upper(), student=words[1])
+                    hs = Homework_student(homework=words[0].upper(), student=words[1],homework_name=hwname)
                     hs.delete()
 
  
@@ -166,10 +166,10 @@ def run_code(request):
         data = f.read().replace('\n','')
     if stderr is not None:
         print("stderr")
-        return stderr
+        return JsonResponse(str(stderr), safe=False)
     elif stdout == data:
         print("success")
-        return 'success'
+        return JsonResponse(str("success"), safe=False)
     elif stdout is not data:
         print("fail")
-        return 'fail'
+        return JsonResponse(str("fail"), safe=False)
