@@ -19,7 +19,7 @@ export class ResultComponent implements OnInit {
   }
 
   getData(){
-    return this.http.get("./success_login/");
+    return this.http.get("./student/");
   }
 
 }

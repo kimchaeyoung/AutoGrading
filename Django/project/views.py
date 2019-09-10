@@ -11,6 +11,7 @@ from .models import *
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from .forms import *
+from django.core import serializers
 
 def home(request):
     return render(request, 'home.html')
@@ -55,7 +56,15 @@ def success_login(request):
         return HttpResponse("Please sign up first")
 
 def student(request):
-    return render(request, 'student.html')
+    current_user=request.user
+    if Student.objects.filter(student_id=current_user).exists():
+       if not Homework_student.objects.filter(student=current_user).exists():
+           my_hws = "No accepted homeworks yet"
+       else :
+           my_hws = Homework_student.objects.filter(student=current_user)
+       hw = serializers.serialize('json',my_hws)
+       return HttpResponse(hw, content_type="text/json-comment-filtered")
+    return HttpResponse()
 
 def professor(request):
     if request.user != None:
@@ -106,17 +115,15 @@ def createhw(request):
         action = payload['action']
         hwname = payload['repository']['name']
         organization = payload['repository']['owner']['login']
-       
         if '-' in hwname: #학생이 hw을 accept해서 rp가 create되었을 때
             words = hwname.split("-")
-
             if action=="created":
                 if not Classroom_student.objects.filter(classroom=organization).filter(student=words[1]).exists():
                     cs = Classroom_student(classroom=organization, student=words[1])
                     cs.save()
-                    if not Homework_student.objects.filter(homework=words[0].upper()).filter(student=words[1]).exists():
-                        hs = Homework_student(homework=words[0].upper(), student=words[1])
-                        hs.save()
+                if not Homework_student.objects.filter(homework=words[0].upper()).filter(student=words[1]).exists():
+                    hs = Homework_student(homework=words[0].upper(), student=words[1])
+                    hs.save()
 
             elif action=="deleted":
                 if Homework_student.objects.filter(homework=words[0].upper()).filter(student=words[1]).exists():
@@ -126,7 +133,6 @@ def createhw(request):
  
         else: #교수님이 문제를 내서 rp가 create 되었을때 / 교수님께 HW name에 절대 - 를 포함해서는 안된다고 안내해야함 - 별로다...
 
- 
             if action=="created":
                 if Classrooms.objects.filter(organization=organization).exists():
                     c = Classrooms.objects.get(organization=organization)

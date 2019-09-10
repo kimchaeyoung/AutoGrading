@@ -42,7 +42,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var routes = [
-    { path: 'success_login', component: _result_result_component__WEBPACK_IMPORTED_MODULE_3__["ResultComponent"] },
+    { path: 'student', component: _result_result_component__WEBPACK_IMPORTED_MODULE_3__["ResultComponent"] },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -67,7 +67,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuLi9hcHAuY29tcG9uZW50LmNzcyJ9 */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY29tcG9uZW50LmNzcyJ9 */"
 
 /***/ }),
 
@@ -170,7 +170,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJyZXN1bHQuY29tcG9uZW50LmNzcyJ9 */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJyZXN1bHQvcmVzdWx0LmNvbXBvbmVudC5jc3MifQ== */"
 
 /***/ }),
 
@@ -181,7 +181,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  result works!\n</p>\n"
+module.exports = "<ul class=\"result\">\n  <li *ngFor=\"let hw of hwlist\">\n    <span> {{hw.homework}} </span>\n  </li>\n</ul>\n\n\n"
 
 /***/ }),
 
@@ -203,17 +203,17 @@ __webpack_require__.r(__webpack_exports__);
 
 var ResultComponent = /** @class */ (function () {
     function ResultComponent(http) {
-        var _this = this;
         this.http = http;
         this.hwlist = [];
+    }
+    ResultComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.getData().subscribe(function (data) {
             _this.hwlist = data;
         });
-    }
-    ResultComponent.prototype.ngOnInit = function () {
     };
     ResultComponent.prototype.getData = function () {
-        return this.http.get("./success_login/");
+        return this.http.get("./student/");
     };
     ResultComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({

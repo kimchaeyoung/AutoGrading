@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ResultComponent } from './result/result.component';
 
 const routes: Routes = [
-    { path: 'success_login', component: ResultComponent },
+    { path: '', component: ResultComponent },
 ];
 
 @NgModule({
