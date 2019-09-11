@@ -153,8 +153,7 @@ def createhw(request):
             
 
 
-def run_code(request):
-    repository_name = "hw4-kimchaeyoung"
+def run_code(request,repository_name):
     MyOut = subprocess.Popen('./runcode.sh ' + repository_name, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     stdout, stderr = MyOut.communicate()
     if stdout is not None:

@@ -20,8 +20,8 @@ export class ResultComponent implements OnInit {
   }
   c1 : Result = new Result();    
     
-  runcode(){
-      this.http.get("./api/result").subscribe(m=> this.c1.result = m.toString());
+  runcode(repository_name){
+      this.http.get("./api/result/"+repository_name).subscribe(m=> this.c1.result = m.toString());
   }
   getData(){
     return this.http.get("./student/");
