@@ -49,9 +49,17 @@ def success_login(request):
     elif Professor.objects.filter(professor_id=current_user).exists():
         p = Professor.objects.get(professor_id=current_user)
         if p.status == True:
-            return render(request, 'professor.html')
+            hws = None
+            std = None
+            if Homeworks.objects.exists():
+                hws = Homeworks.objects.all()
+            if Student.objects.exists():
+                std = Student.objects.all()
+            return render(request, 'professor.html', {'hws':hws, 'std':std})
         else:
             return HttpResponse("Sorry, you are not yet approved as manager.")
+    elif str(current_user)=="admin":
+        return HttpResponse("You are system manager. Go to the admin page.")
     else:
         return HttpResponse("Please sign up first")
 
@@ -118,13 +126,9 @@ def createhw(request):
         if '-' in hwname: #학생이 hw을 accept해서 rp가 create되었을 때
             words = hwname.split("-")
             if action=="created":
-                if not Classroom_student.objects.filter(classroom=organization).filter(student=words[1]).exists():
-                    cs = Classroom_student(classroom=organization, student=words[1])
-                    cs.save()
                 if not Homework_student.objects.filter(homework=words[0].upper()).filter(student=words[1]).exists():
                     hs = Homework_student(homework=words[0].upper(), student=words[1], homework_name=hwname)
                     hs.save()
-
             elif action=="deleted":
                 if Homework_student.objects.filter(homework=words[0].upper()).filter(student=words[1]).exists():
                     hs = Homework_student(homework=words[0].upper(), student=words[1],homework_name=hwname)
@@ -134,19 +138,13 @@ def createhw(request):
         else: #교수님이 문제를 내서 rp가 create 되었을때 / 교수님께 HW name에 절대 - 를 포함해서는 안된다고 안내해야함 - 별로다...
 
             if action=="created":
-                if Classrooms.objects.filter(organization=organization).exists():
-                    c = Classrooms.objects.get(organization=organization)
-                else:
-                    c = Classrooms(organization=organization)
-                    c.save()
-                h = Homeworks(classroom=c, hw_name=hwname)
-                h.save()
-
+                if not Homeworks.objects.filter(hw_name=hwname.upper()).exists():
+                    h = Homeworks(hw_name=hwname.upper())
+                    h.save()
             elif action=="deleted":
-                if Classrooms.objects.filter(organization=organization).exists():
-                    if Homeworks.objects.filter(hw_name=hwname).exists():
-                        h = Homeworks.objects.get(hw_name=hwname)
-                        h.delete()
+                if Homeworks.objects.filter(hw_name=hwname).exists():
+                    h = Homeworks.objects.get(hw_name=hwname)
+                    h.delete()
 
     hws = Homeworks.objects.all()
     return render(request, "hwlist.html", {'hws':hws})
