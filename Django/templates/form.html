@@ -1,35 +1,37 @@
 <h3>Sign Up</h3>
-<p> please write your id as github id.</p>
 
-<!---<select>
-<option value="" selected="selected"></option>
-<option value="s">student</option>
-<option value="p">professor</option>
-</select>
+<div class="mode"><label for="id_refer">User Mode</label><select name="refer" id="id_refer">
+    <option selected="selected">choose your mode</option>
+    <option value="student">Student</option>
+    <option value="professor">Professor</option>
+    </select>
+</div>
 
-<p><form id="s" class="user s" method="post" style="display:none" >
-  {% csrf_token %}
-  {{student_form}}
-  <button type="submit">submit</button>
-</form>
+<form method="post">
+    {% csrf_token %}
+    Github Id: {{form.id}}
+    Name: {{form.name}}
+<br/>
 
-<form id="p" class="user p" method="post" style="display:none">
- {% csrf_token %}
- {{form}}
+<div id="student" style="display:none">
+    Student Number:{{ form.other }}
+</div>
+
+<div style="text-align: center;">
+    <button type="submit" class="button-main">Next</button>
+</div>
+
 </form>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript">
-  $("select").on("change", function() {    
-    $('.user').hide();
-    $('#' + $(this).val()).show();      
+<script type="text/javascript"> 
+  $('#id_refer').on('change', function() {
+    if (this.value == 'student' ) {
+        $('#student').show();
+    }
+    else {
+        $('#student').hide();
+    }
   });
 </script>
 
--->
-
-<form method="POST">
-  {%csrf_token%}
-  {{form}}
-  <button type="submit">Submit</button>
-</form>

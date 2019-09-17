@@ -12,7 +12,7 @@
 color: #fff !important;
 text-transform: uppercase;
 text-decoration: none;
-background: #60a3bc;
+background: #eb9878;
 padding: 20px 45px;
 display: inline-block;
 border: none;
@@ -30,10 +30,10 @@ transition: all 0.4s ease 0s;
 <h2 class="title"> HGU Auto Grading System </h2>
 {% if user.is_authenticated %}
 <center><p>Hi {{ user.username }}
-<center><input type="button" class="example_b" onclick="location.href='{% url 'logout' %}'" target="_blank" rel="nofollow" value="Log Out"><span>
+<center><input type="button" class="example_b" onclick="location.href='{% url 'logout' %}'" target="_blank" rel="nofollow" value="Sign Out"><span>
 <center><input type="button" class="example_b" onclick="location.href='{% url 'success_login' %}'" target="_blank" rel="nofollow" value="My Page"><span>
 {% else %}
 <center><input type="button" class="example_b" onclick="location.href='{% url 'signup' %}'" target="_blank" rel="nofollow" value="Sign Up"><span>
-<br/><br/><input  type="button" class="example_b" onclick="location.href='{% url 'social:begin' 'github' %}'" target="_blank" rel="nofollow" value="Log In"><span>
+<br/><br/><input  type="button" class="example_b" onclick="location.href='{% url 'social:begin' 'github' %}'" target="_blank" rel="nofollow" value="Sign In"><span>
 {% endif %}
 

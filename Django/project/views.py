@@ -21,8 +21,8 @@ def signup_form(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.cleaned_data
-            if user['isManager'] == False:
-                s = Student(student_id=user['id'], student_name=user['name'])
+            if user['other'] != 0:
+                s = Student(student_id=user['id'], student_number=user['other'], student_name=user['name'])
                 s.save()
                 return render(request, 'registration/login.html')
             else:
@@ -34,11 +34,7 @@ def signup_form(request):
 
     return render(request, 'form.html', {'form':form})
 
-def login(request):
-        
-    return render(request, 'login.html')
-
-def success_login(request):
+def success_signin(request):
     current_user=request.user
     if Student.objects.filter(student_id=current_user).exists():
         if not Homework_student.objects.filter(student=current_user).exists():
