@@ -1,6 +1,7 @@
 {% block content %}
 	<h2> [Professor - Manage homeworks {{h.hwname}}] </h2>       
 	{% if user.is_authenticated %}
+                <a href="/hwinfo/{{h.hwname}}/">Edit {{h.hwname}} Information</a>
 		<p><font color="blue"><b> Students in this homework </b></p>
 			{% for hw in hws %}
 				<li> {{hw.student}} {{hw.score}} </li>

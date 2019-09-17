@@ -9,7 +9,7 @@
                   {% endfor %}
               <p><font color="blue"><b> Homeworks made by me</b></p>
                   {% for hw in hws %}
-                      <li> <a href="/managehw/{{hw.hwname}}/">{{hw.hwname}}</a></li>
+                      <li> <a href="/managehw/{{hw.hwname}}/">{{hw.hwname}}</a> {{hw.link}} {{hw.duedate}}</li>
                   {% endfor %}
              {% else %}
                  <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>

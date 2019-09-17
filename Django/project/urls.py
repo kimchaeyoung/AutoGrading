@@ -8,6 +8,7 @@ urlpatterns = [
 #    url(r'^professor/$', views.professor, name='professor'),
     path('permission/<userid>/', views.permission, name='permission'),
     path('managehw/<hwname>/', views.managehw, name='managehw'),
+    path('hwinfo/<hwname>/', views.hwinfo, name='hwinfo'),
     url(r'^permission/$', views.permission, name='permission'),
     url(r'^signup/$', views.signup_form, name='signup'),
     url(r'^success_login/$', views.success_login, name='success_login'),

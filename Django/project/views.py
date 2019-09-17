@@ -85,6 +85,22 @@ def managehw(request, hwname):
     hws = Homework_student.objects.filter(homework=h)
     return render(request, 'managehws.html', {'hws':hws, 'h':h})
 
+def hwinfo(request, hwname):
+    if request.method == 'POST':
+        form = HWInfo(request.POST)
+        if form.is_valid():
+            hwinfo = form.cleaned_data
+            h = Homework.objects.get(hwname=hwname)
+            h.link = hwinfo['link']
+            h.duedate = hwinfo['datetime']
+            h.save()
+            return HttpResponse("Updated!")
+        else:
+            return HttpResponse("Wrong information")
+    else:
+        form = HWInfo()
+    
+    return render(request, 'hwinfo.html', {'form':form})    
 
 
 def student(request):
