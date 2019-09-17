@@ -1,0 +1,11 @@
+{% block content %}
+	<h2> [Professor - Manage homeworks {{hws.homework}}] </h2>       
+	{% if user.is_authenticated %}
+		<p><font color="blue"><b> Students in this homework </b></p>
+			{% for hw in hws %}
+				<li> {{hw.student}} {{hw.score}} </li>
+			{% endfor %}
+	{% else %}
+                 <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
+        {% endif %}
+{% endblock content %}

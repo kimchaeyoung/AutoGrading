@@ -42,7 +42,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var routes = [
-    { path: 'student', component: _result_result_component__WEBPACK_IMPORTED_MODULE_3__["ResultComponent"] },
+    { path: '', component: _result_result_component__WEBPACK_IMPORTED_MODULE_3__["ResultComponent"] },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -67,7 +67,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY29tcG9uZW50LmNzcyJ9 */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FwcC5jb21wb25lbnQuY3NzIn0= */"
 
 /***/ }),
 
@@ -78,7 +78,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-result></app-result>\n"
+module.exports = "<app-result></app-result>\r\n"
 
 /***/ }),
 
@@ -170,7 +170,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJyZXN1bHQvcmVzdWx0LmNvbXBvbmVudC5jc3MifQ== */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3Jlc3VsdC9yZXN1bHQuY29tcG9uZW50LmNzcyJ9 */"
 
 /***/ }),
 
@@ -181,7 +181,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"result\">\n  <li *ngFor=\"let hw of hwlist\">\n    <span> {{hw.homework}} </span>\n  </li>\n</ul>\n\n\n"
+module.exports = "<ul class=\"result\">\r\n  <li *ngFor=\"let hw of hwlist\">\r\n    <span> {{hw.fields.homework}} </span>\r\n    <button (click)=\"runcode(hw.fields.homework_name)\"> 과제채점</button>\r\n    <span> {{c1.result}} </span>\r\n  </li>\r\n</ul>\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -189,12 +189,13 @@ module.exports = "<ul class=\"result\">\n  <li *ngFor=\"let hw of hwlist\">\n   
 /*!********************************************!*\
   !*** ./src/app/result/result.component.ts ***!
   \********************************************/
-/*! exports provided: ResultComponent */
+/*! exports provided: ResultComponent, Result */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResultComponent", function() { return ResultComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Result", function() { return Result; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
@@ -205,12 +206,18 @@ var ResultComponent = /** @class */ (function () {
     function ResultComponent(http) {
         this.http = http;
         this.hwlist = [];
+        this.c1 = new Result();
     }
     ResultComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.getData().subscribe(function (data) {
             _this.hwlist = data;
+            _this.c1.result = "대기중";
         });
+    };
+    ResultComponent.prototype.runcode = function (repository_name) {
+        var _this = this;
+        this.http.get("./api/result/" + repository_name).subscribe(function (m) { return _this.c1.result = m.toString(); });
     };
     ResultComponent.prototype.getData = function () {
         return this.http.get("./student/");
@@ -224,6 +231,12 @@ var ResultComponent = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], ResultComponent);
     return ResultComponent;
+}());
+
+var Result = /** @class */ (function () {
+    function Result() {
+    }
+    return Result;
 }());
 
 
@@ -291,7 +304,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/cykim/Auto_hyejin/AutoGrading/Angular/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/bodago/week4cap/AutoGrading/Angular/src/main.ts */"./src/main.ts");
 
 
 /***/ })

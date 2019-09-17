@@ -2,14 +2,14 @@
     <h2> [Professor] </h2>
     {% if user.is_authenticated %}
              <h4 class="display-4">Hello, {{ user.username }}</h4>
-             <p><font color="green"><b> Students </b></p>
-                 {% for st in std %}
-                     <p> {{st.student_id}} </p>
-                     <p> {{st.student_name}} </p>
-                 {% endfor %}
-              <p><font color="blue"><b> Homeworks </b></p>
+	     <p><b> Waiting List for Permission </b></p>
+                 {% for pf in pmslist %}
+                     <li>{{pf.professor_id}} {{pf.professor_name}}
+                     <a href="/permission/{{pf.professor_id}}/">{{pf.status}}</a></li>
+                  {% endfor %}
+              <p><font color="blue"><b> Homeworks made by me</b></p>
                   {% for hw in hws %}
-                      <p> {{hw.hw_name}} </p>
+                      <li> <a href="/managehw/{{hw.hwname}}/">{{hw.hwname}}</a></li>
                   {% endfor %}
              {% else %}
                  <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
