@@ -83,7 +83,7 @@ def permission(request, userid):
 def managehw(request, hwname):
     h = Homework.objects.get(hwname=hwname)
     hws = Homework_student.objects.filter(homework=h)
-    return render(request, 'managehws.html', {'hws':hws})
+    return render(request, 'managehws.html', {'hws':hws, 'h':h})
 
 
 

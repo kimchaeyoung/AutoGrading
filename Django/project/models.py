@@ -5,6 +5,8 @@ from django.contrib.auth.models import AbstractUser
 class Homework(models.Model):
     hwname = models.CharField(max_length=200) #always upper letter
     madeby = models.CharField(max_length=200)
+    link = models.CharField(max_length=200, blank=True)
+    duedate = models.DateTimeField(blank=True)
 
 class Student(models.Model):
     student_id = models.CharField(max_length=50)
