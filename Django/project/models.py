@@ -9,6 +9,7 @@ class Homework_student(models.Model):
     homework = models.CharField(max_length=200)
     student = models.CharField(max_length=200)
     homework_name = models.CharField(max_length=200)
+    score = models.CharField(max_length=200, default="Waiting")
 
 class Professor(models.Model):
     professor_id = models.CharField(max_length=50)

@@ -151,22 +151,27 @@ def createhw(request):
             
 
 
-def run_code(request,repository_name):
-    MyOut = subprocess.Popen('./runcode.sh ' + repository_name, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+def run_code(request, repository_name):
+
+    MyOut = subprocess.Popen('./docker.sh ' + repository_name, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     stdout, stderr = MyOut.communicate()
+    hw_score = Homework_student.objects.get(homework_name=repository_name)
+
     if stdout is not None:
         stdout = stdout.decode('utf-8')
-    if stderr is not None:
+    if stderr != '':
         stderr = stderr.decode('utf-8')
-
     with open('input_output/output.txt', 'r') as f:
         data = f.read().replace('\n','')
-    if stderr is not None:
-        print("stderr")
-        return JsonResponse(str(stderr), safe=False)
+    if stderr != '':
+        hw_score.score = stderr
+        hw_score.save()
     elif stdout == data:
-        print("success")
-        return JsonResponse(str("success"), safe=False)
+        hw_score.score = "Pass"
+        hw_score.save() 
     elif stdout is not data:
-        print("fail")
-        return JsonResponse(str("fail"), safe=False)
+        hw_score.score = "Fail"
+        hw_score.save()
+    return HttpResponse()
+
+

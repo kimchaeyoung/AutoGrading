@@ -22,6 +22,7 @@ export class ResultComponent implements OnInit {
     
   runcode(repository_name){
       this.http.get("./api/result/"+repository_name).subscribe(m=> this.c1.result = m.toString());
+      this.getData().subscribe(data=> this.hwlist = data);
   }
   getData(){
     return this.http.get("./student/");
