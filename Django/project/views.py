@@ -21,9 +21,9 @@ def signup_form(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.cleaned_data
-            if user['isManager'] == False:
+            if user['other'] != None:
                 if not Student.objects.filter(student_id=user['id']).exists():
-                    s = Student(student_id=user['id'], student_name=user['name'])
+                    s = Student(student_id=user['id'], student_number=user['other'], student_name=user['name'])
                     s.save()
                     return render(request, 'registration/login.html')
                 else:
@@ -40,9 +40,6 @@ def signup_form(request):
 
     return render(request, 'form.html', {'form':form})
 
-def login(request):
-        
-    return render(request, 'login.html')
 
 def success_login(request):
     current_user=request.user
@@ -195,16 +192,16 @@ def createhw(request):
 
 
 def run_code(request,repository_name):
-    MyOut = subprocess.Popen('./runcode.sh ' + repository_name, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+    MyOut = subprocess.Popen('./runcode.sh ' + repository_name, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     stdout, stderr = MyOut.communicate()
     if stdout is not None:
         stdout = stdout.decode('utf-8')
-    if stderr is not None:
+    if stderr is not '':
         stderr = stderr.decode('utf-8')
 
     with open('input_output/output.txt', 'r') as f:
         data = f.read().replace('\n','')
-    if stderr is not None:
+    if stderr is not '':
         print("stderr")
         return JsonResponse(str(stderr), safe=False)
     elif stdout == data:

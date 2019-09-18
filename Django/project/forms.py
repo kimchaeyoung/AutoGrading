@@ -6,8 +6,7 @@ class SignUpForm(forms.Form):
 
     id = forms.CharField(max_length=30)
     name = forms.CharField(max_length=30)
-    isManager = forms.BooleanField(required=False)
-
+    other = forms.IntegerField(required=False)
 
 class HWInfo(forms.Form):
     link = forms.CharField(max_length=200)

@@ -78,7 +78,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-result></app-result>\r\n"
+module.exports = "<app-result></app-result>\n"
 
 /***/ }),
 
@@ -181,7 +181,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"result\">\r\n  <li *ngFor=\"let hw of hwlist\">\r\n    <span> {{hw.fields.homework}} </span>\r\n    <button (click)=\"runcode(hw.fields.homework_name)\"> 과제채점</button>\r\n    <span> {{c1.result}} </span>\r\n  </li>\r\n</ul>\r\n\r\n\r\n\r\n"
+module.exports = "<ul class=\"result\">\n  <li *ngFor=\"let hw of hwlist\">\n    <span> {{hw.fields.homework}} </span>\n    <button (click)=\"runcode(hw.fields.homework_name)\"> 과제채점</button>\n    <span> {{c1.result}} </span>\n  </li>\n</ul>\n\n\n\n"
 
 /***/ }),
 
@@ -304,7 +304,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/bodago/week4cap/AutoGrading/Angular/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/jihye/webhook5/AutoGrading/Angular/src/main.ts */"./src/main.ts");
 
 
 /***/ })

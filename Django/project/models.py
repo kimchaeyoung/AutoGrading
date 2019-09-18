@@ -10,6 +10,7 @@ class Homework(models.Model):
 
 class Student(models.Model):
     student_id = models.CharField(max_length=50)
+    student_number = models.IntegerField(default=0)
     student_name = models.CharField(max_length=50)
     
     def __str__(self):
