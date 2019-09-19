@@ -165,6 +165,7 @@ def createhw(request):
  
         if '-' in hwname: #학생이 hw을 accept해서 rp가 create되었을 때
             words = hwname.split("-")
+            print("homeworkname: "+words)
             h = Homework.objects.get(hwname=words[0].upper())
             s = Student.objects.get(student_id=words[1])
             if action=="created":

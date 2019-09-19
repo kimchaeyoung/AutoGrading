@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class Homework(models.Model):
-    hwname = models.CharField(max_length=200) #always upper letter
+    hwname = models.CharField(max_length=200, primary_key=True) #always upper letter
     madeby = models.CharField(max_length=200)
     link = models.CharField(max_length=200, blank=True, null=True)
     duedate = models.DateTimeField(blank=True, null=True)
