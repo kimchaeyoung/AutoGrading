@@ -67,7 +67,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FwcC5jb21wb25lbnQuY3NzIn0= */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuLi9hcHAuY29tcG9uZW50LmNzcyJ9 */"
 
 /***/ }),
 
@@ -170,7 +170,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3Jlc3VsdC9yZXN1bHQuY29tcG9uZW50LmNzcyJ9 */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJyZXN1bHQuY29tcG9uZW50LmNzcyJ9 */"
 
 /***/ }),
 
@@ -181,7 +181,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"result\">\n  <li *ngFor=\"let hw of hwlist\">\n    <span> {{hw.fields.homework}} </span>\n    <button (click)=\"runcode(hw.fields.homework_name)\"> 과제채점</button>\n    <span> {{c1.result}} </span>\n  </li>\n</ul>\n\n\n\n"
+module.exports = "<ul class=\"result\">\n  <li *ngFor=\"let hw of hwlist\">\n    <span> {{hw.fields.repo_name}} </span>\n    <button (click)=\"runcode(hw.fields.repo_name)\"> 과제채점</button>\n    <span> {{hw.fields.score}} </span>\n  </li>\n</ul>\n\n\n\n"
 
 /***/ }),
 
@@ -218,6 +218,7 @@ var ResultComponent = /** @class */ (function () {
     ResultComponent.prototype.runcode = function (repository_name) {
         var _this = this;
         this.http.get("./api/result/" + repository_name).subscribe(function (m) { return _this.c1.result = m.toString(); });
+        this.getData().subscribe(function (data) { return _this.hwlist = data; });
     };
     ResultComponent.prototype.getData = function () {
         return this.http.get("./student/");
@@ -304,7 +305,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/jihye/webhook5/AutoGrading/Angular/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/cykim/AutoGrading/Angular/src/main.ts */"./src/main.ts");
 
 
 /***/ })

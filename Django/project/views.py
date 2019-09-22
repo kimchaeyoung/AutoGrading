@@ -165,12 +165,11 @@ def createhw(request):
  
         if '-' in hwname: #학생이 hw을 accept해서 rp가 create되었을 때
             words = hwname.split("-")
-            print("homeworkname: "+words)
             h = Homework.objects.get(hwname=words[0].upper())
             s = Student.objects.get(student_id=words[1])
             if action=="created":
                 if not Homework_student.objects.filter(homework=h).filter(student=s).exists():
-                    hs = Homework_student(homework=h, student=s)
+                    hs = Homework_student(homework=h, student=s, repo_name=hwname)
                     hs.save()
 #            elif action=="deleted":
 #                if Homework_student.objects.filter(homework=words[0].upper()).filter(student=words[1]).exists():
@@ -193,21 +192,28 @@ def createhw(request):
 
 
 def run_code(request,repository_name):
-    MyOut = subprocess.Popen('./runcode.sh ' + repository_name, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    current_user = request.user
+
+    MyOut = subprocess.Popen('./docker.sh ' + repository_name, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     stdout, stderr = MyOut.communicate()
+    print(repository_name)
+    hw = Homework_student.objects.get(repo_name = repository_name)
+
     if stdout is not None:
         stdout = stdout.decode('utf-8')
+        print("stdout",stdout)
     if stderr is not '':
         stderr = stderr.decode('utf-8')
 
     with open('input_output/output.txt', 'r') as f:
         data = f.read().replace('\n','')
     if stderr is not '':
-        print("stderr")
-        return JsonResponse(str(stderr), safe=False)
+        hw.score = stderr
+        hw.save()
     elif stdout == data:
-        print("success")
-        return JsonResponse(str("success"), safe=False)
+        hw.score = "Pass"
+        hw.save()
     elif stdout is not data:
-        print("fail")
-        return JsonResponse(str("fail"), safe=False)
+        hw.score = "Fail"
+        hw.save()
+    return HttpResponse()

@@ -1,6 +1,5 @@
 #!/bin/bash
-dir=$1
 
-cd $dir
+cd $1
 gcc main.c
-cat ../input_output/input.txt | ./a.out
+cat /input_output/input.txt | ./a.out

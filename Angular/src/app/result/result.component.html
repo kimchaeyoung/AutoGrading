@@ -1,8 +1,8 @@
 <ul class="result">
   <li *ngFor="let hw of hwlist">
     <span> {{hw.fields.homework}} </span>
-    <button (click)="runcode(hw.fields.homework_name)"> 과제채점</button>
-    <span> {{c1.result}} </span>
+    <button (click)="runcode(hw.fields.repo_name)"> 과제채점</button>
+    <span> {{hw.fields.score}} </span>
   </li>
 </ul>
 

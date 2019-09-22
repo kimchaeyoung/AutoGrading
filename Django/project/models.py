@@ -20,6 +20,7 @@ class Homework_student(models.Model):
     homework = models.ForeignKey(Homework, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     score = models.CharField(max_length=200, default="Wating")
+    repo_name = models.CharField(max_length=200)
 
 class Professor(models.Model):
     professor_id = models.CharField(max_length=50)
