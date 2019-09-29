@@ -80,20 +80,5 @@ main(int argc, char const *argv[])
         shutdown(sock_fd, SHUT_WR) ;
 
         char buf[1024] ;
-        data = 0x0 ;
-        len = 0 ;
-	while ( (s = recv(sock_fd, buf, 1023, 0)) > 0 ) {
-                buf[s] = 0x0 ;
-                if (data == 0x0) {
-                        data = strdup(buf) ;
-                        len = s ;
-                }
-                else {
-                        data = realloc(data, len + s + 1) ;
-                        strncpy(data + len, buf, s) ;
-                        data[len + s] = 0x0 ;
-                        len += s ;
-                }
-
-        }
-        printf(">%s\n", data);
+        recv_message(sock_fd, buf) ;
+	printf(">%s\n", data);
