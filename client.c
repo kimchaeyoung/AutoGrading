@@ -6,10 +6,10 @@
 #include <string.h>
 
 void
-recv_message(int conn)
+recv_message(int conn, char * buf)
 {   
     int s, len ;
-    char buf[1024] ;
+//    char buf[1024] ;
     char * data = 0x0 ;
     len = 0 ;
     
