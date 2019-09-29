@@ -1,0 +1,7 @@
+FROM       ubuntu:16.04
+MAINTAINER h.river771@gmail.com
+RUN        apt-get -y update
+RUN apt-get -y install build-essential #install gcc
+
+CMD ./runcode.sh
+
