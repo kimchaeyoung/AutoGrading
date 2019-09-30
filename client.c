@@ -27,7 +27,7 @@ recv_message(int conn, char * buf)
         }
      
     }
-    printf(">%s\n", data);
+//    printf(">%s\n", data);
 }
 
 void
@@ -72,13 +72,23 @@ main(int argc, char const *argv[])
                 exit(EXIT_FAILURE) ;
         }
 
-        scanf("%s", buffer) ;
-        data = buffer ;
-//      data = "0" ; //connect success and give me repo
+//        scanf("%s", buffer) ;
+//        data = buffer ;
+        data = "2" ; //connect success and give me repo
         send_message(sock_fd, data);
 
         shutdown(sock_fd, SHUT_WR) ;
 
-        char buf[1024] ;
-        recv_message(sock_fd, buf) ;
-	printf(">%s\n", data);
+        char recv_data[100] ;
+        recv_message(sock_fd, recv_data) ;
+	printf(">%s\n", recv_data);
+
+	if(atoi(recv_data) != 3) {
+		printf("====ERROR:No HW_FILE====") ;
+	}
+
+	system("gcc main.c") ;
+	system("./a.out") ;
+
+	
+}

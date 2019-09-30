@@ -85,13 +85,13 @@ main(int argc, char const *argv[])
 		char msg[100];
 		recv_message(new_socket, msg) ;
 
-                if(atoi(msg)==3) {
+                if(atoi(msg)==2) {
 			printf("OK\n");
-			system("docker cp ./hw1-MJ/main.c gallant_rhodes:.");
+			system("docker cp ./hw1-MJ/main.c client:.");
 		}
 		printf(">>%s\n", msg) ;
 
-		send_message(new_socket, "heyjin") ;	
+		send_message(new_socket, "3") ;	
 		shutdown(new_socket, SHUT_WR) ;
 	}
 }
