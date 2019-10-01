@@ -194,26 +194,23 @@ def createhw(request):
 def run_code(request,repository_name):
     current_user = request.user
 
-    MyOut = subprocess.Popen('./docker.sh ' + repository_name, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    stdout, stderr = MyOut.communicate()
+    MyOut = subprocess.Popen('./docker./server ' + repository_name, stdout=subprocess.PIPE, shell=True)
+    stdout = MyOut.communicate()
     print(repository_name)
     hw = Homework_student.objects.get(repo_name = repository_name)
 
     if stdout is not None:
         stdout = stdout.decode('utf-8')
         print("stdout",stdout)
-    if stderr is not '':
-        stderr = stderr.decode('utf-8')
 
-    with open('input_output/output.txt', 'r') as f:
-        data = f.read().replace('\n','')
-    if stderr is not '':
+#우선은 테스트케이스에 빌드에러가 없어서 잘 돌아가는데 이부분 바꿔줘야 한다.
+    if stdout == "builderror": 
         hw.score = stderr
         hw.save()
-    elif stdout == data:
+    elif stdout == "correct":
         hw.score = "Pass"
         hw.save()
-    elif stdout is not data:
+    elif stdout == "wrong":
         hw.score = "Fail"
         hw.save()
     return HttpResponse()
