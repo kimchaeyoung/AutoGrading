@@ -85,13 +85,24 @@ main(int argc, char const *argv[])
 		char msg[100];
 		recv_message(new_socket, msg) ;
 
-                if(atoi(msg)==2) {
-			printf("OK\n");
-			system("docker cp ./hw1-MJ/main.c client:.");
+                if(atoi(msg) == 2) {
+			system("docker cp ./hw1-MJ/main.c docker:.");
+			printf("respository passed to docker client\n") ;
+			send_message(new_socket, "3");
 		}
-		printf(">>%s\n", msg) ;
 
-		send_message(new_socket, "3") ;	
+		if(atoi(msg) == 4) {
+			system("docker cp ./input.txt docker:.") ;
+			printf("inputfile passed to docker client\n") ;
+			send_message(new_socket, "5") ;
+		}
+
+		if(atoi(msg) == 6) {
+			system("docker cp docker:./studentoutput.txt .");
+			printf("get student's output file\n") ;
+			send_message(new_socket, "7") ;
+		}
+
 		shutdown(new_socket, SHUT_WR) ;
 	}
 }

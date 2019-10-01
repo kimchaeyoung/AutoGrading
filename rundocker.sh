@@ -1,5 +1,5 @@
 #!/bin/bash
 
 docker build -t client .
-docker rm client
-docker run --name="client" -it client /bin/bash
+docker rm docker
+docker run --name="docker" -it client /bin/bash

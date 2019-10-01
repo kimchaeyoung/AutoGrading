@@ -1,5 +1,7 @@
 #include <stdio.h>
 
 int main() {
-    printf("heyjin\n");
+    int n ;
+    scanf("%d", &n);
+    printf("%d heyjin %d\n", n, n) ;
 }
