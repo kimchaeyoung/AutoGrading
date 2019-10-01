@@ -27,7 +27,7 @@ recv_message(int conn, char * buf)
         }
         
     }
-    printf(">%s\n", data);
+//    printf(">%s\n", data);
 }
 
 void
@@ -47,7 +47,10 @@ send_message(int conn, char * buffer)
 
 int 
 main(int argc, char const *argv[]) 
-{ 
+{
+	char repo_name[100] ;
+	strcpy(repo_name, argv[1]) ;
+ 
 	int listen_fd, new_socket ; 
 	struct sockaddr_in address; 
 	int opt = 1; 
@@ -82,25 +85,75 @@ main(int argc, char const *argv[])
 			exit(EXIT_FAILURE); 
 		}
 
-		char msg[100];
+		char msg[32];
 		recv_message(new_socket, msg) ;
 
                 if(atoi(msg) == 2) {
-			system("docker cp ./hw1-MJ/main.c docker:.");
-			printf("respository passed to docker client\n") ;
+			char cmd[2048] = "docker cp ./" ;
+			strcat(cmd, repo_name) ;
+			strcat(cmd, "/main.c docker:.") ;
+			system(cmd) ;
+//			printf("respository passed to docker client\n") ;
 			send_message(new_socket, "3");
 		}
 
 		if(atoi(msg) == 4) {
 			system("docker cp ./input.txt docker:.") ;
-			printf("inputfile passed to docker client\n") ;
+//			printf("inputfile passed to docker client\n") ;
 			send_message(new_socket, "5") ;
 		}
 
 		if(atoi(msg) == 6) {
-			system("docker cp docker:./studentoutput.txt .");
-			printf("get student's output file\n") ;
+			system("docker cp docker:./studentoutput.txt ./");
+//			printf("get student's output file\n") ;
 			send_message(new_socket, "7") ;
+                        //evaluate
+                        FILE* fp1;
+                        FILE* fp2;
+                        int check = 1;
+                        int state1, state2;
+			int buff = 100 ;
+                        char a[buff], b[buff];
+
+                        fp1 = fopen("output.txt", "rt");
+                        fp2 = fopen("studentoutput.txt", "rt");
+
+                        if (fp1 == NULL || fp2 == NULL) {
+                                printf("error when fopen files");
+                                return 1;
+                        }
+
+
+                        while(1){
+                                if (feof(fp1) == 0 && feof(fp2) == 0) {
+                                        fgets(a, buff, fp1);
+                                        fgets(b, buff, fp2);
+
+                                        if(strcmp(a,b)!=0){
+                                                check = 0;
+                                                break;
+                                        }
+                                }
+
+                                else if(feof(fp1)!=0 && feof(fp2)==0){
+                                        check = 0;
+                                        break;
+                                }
+
+                                else if(feof(fp1)==0 && feof(fp2)!=0){
+                                        check = 0;
+                                        break;
+                                }
+
+                                else break;
+
+
+                        }
+
+                        if(check){
+                                printf("correct\n");
+                        }
+                        else printf("wrong\n");
 		}
 
 		shutdown(new_socket, SHUT_WR) ;
